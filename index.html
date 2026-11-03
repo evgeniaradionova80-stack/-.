@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Архив памяти — исторический и документальный проект о людях и событиях, связанных с СВО.">
+<meta name="theme-color" content="#172536">
+<title>Архив памяти — исторический архив</title>
+<style>
+:root{--ink:#172536;--muted:#667487;--paper:#f4f6f8;--card:#fff;--line:#e1e6ec;--accent:#9b794d;--blue:#263d56}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+a{color:inherit}.wrap{width:min(1120px,calc(100% - 36px));margin:auto}
+header{background:#172536;color:white;border-bottom:3px solid var(--accent)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px 0}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}.seal{width:42px;height:42px;border:1px solid #a88b65;border-radius:50%;display:grid;place-items:center;color:#d6bd99;font-size:21px}
+.brand b{display:block;font-size:18px;letter-spacing:.04em}.brand small{display:block;color:#bdc7d2;font-size:11px;letter-spacing:.13em;text-transform:uppercase}
+nav{display:flex;gap:20px;flex-wrap:wrap}nav a{text-decoration:none;color:#e3e8ee;font-size:14px}nav a:hover{color:#e0c39b}
+.hero{background:linear-gradient(120deg,#1b2c40,#30475f);color:white;padding:58px 0 50px}
+.eyebrow{color:#d5b991;text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:700}
+h1{font-family:Georgia,serif;font-size:clamp(34px,5vw,54px);line-height:1.08;font-weight:500;margin:13px 0}
+.hero p{max-width:680px;color:#d9e0e8;font-size:17px;margin:0 0 26px}
+.searchbox{background:white;color:var(--ink);border-radius:12px;padding:18px;box-shadow:0 12px 35px #101d2b44}
+.searchrow{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px}
+input,select{width:100%;min-height:46px;border:1px solid #d8dee6;border-radius:7px;padding:10px 12px;font:inherit;background:white;color:var(--ink)}
+button{border:0;border-radius:7px;padding:11px 20px;background:var(--accent);color:white;font:600 15px system-ui;cursor:pointer;min-height:46px}
+button:hover{filter:brightness(.94)}button.secondary{background:#e9edf1;color:var(--ink);border:1px solid var(--line)}
+main{padding:38px 0 64px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
+h2{font:500 29px/1.2 Georgia,serif;margin:0 0 7px}.sub{color:var(--muted);margin:0;font-size:14px}
+.notice{background:#fffaf2;border:1px solid #ead9bd;border-left:4px solid var(--accent);border-radius:8px;padding:14px 16px;color:#594a36;font-size:14px;margin:24px 0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 20px}.chip{border:1px solid var(--line);background:white;color:#425064;border-radius:99px;padding:7px 13px;font-size:13px;cursor:pointer;min-height:0}.chip.active{background:var(--blue);color:white;border-color:var(--blue)}
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.record{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:19px;min-height:190px;display:flex;flex-direction:column}
+.record .tag{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8b6d46;font-weight:700}.record h3{font:500 21px Georgia,serif;margin:12px 0 7px}.record p{color:var(--muted);font-size:14px;margin:0 0 14px}.record a{margin-top:auto;color:#324d68;font-weight:650;font-size:14px;text-decoration:none}
+.empty{grid-column:1/-1;text-align:center;background:white;border:1px dashed #cbd3dc;border-radius:10px;padding:36px 20px}.empty .symbol{font-size:28px;color:#9b794d}.empty h3{font:500 22px Georgia,serif;margin:8px}.empty p{color:var(--muted);max-width:560px;margin:0 auto;font-size:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:38px}.panel{background:white;border:1px solid var(--line);border-radius:10px;padding:22px}.panel h2{font-size:24px}.panel p,.panel li{color:var(--muted);font-size:14px}.panel ul{padding-left:20px}
+footer{background:#172536;color:#d5dce4;padding:28px 0;font-size:13px}footer p{margin:5px 0;color:#b9c3ce}.footerrow{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.modal{display:none;position:fixed;inset:0;background:#0d1825aa;z-index:5;padding:20px;align-items:center;justify-content:center}.modal.open{display:flex}.dialog{background:white;border-radius:12px;max-width:600px;width:100%;padding:24px;max-height:85vh;overflow:auto}.dialog h2{margin-bottom:12px}.close{float:right;background:#e9edf1;color:var(--ink);padding:5px 12px;min-height:34px}
+@media(max-width:800px){.searchrow{grid-template-columns:1fr 1fr}.searchrow input:first-child{grid-column:1/-1}.results{grid-template-columns:repeat(2,1fr)}nav{gap:12px}}
+@media(max-width:560px){.top{align-items:flex-start;flex-direction:column}.hero{padding:40px 0}.searchrow{grid-template-columns:1fr}.searchrow input:first-child{grid-column:auto}.results,.grid2{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.wrap{width:min(100% - 28px,1120px)}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap top">
+  <a class="brand" href="#" aria-label="Архив памяти — главная">
+   <span class="seal" aria-hidden="true">✧</span><span><b>АРХИВ ПАМЯТИ</b><small>Историко-документальный проект</small></span>
+  </a>
+  <nav aria-label="Главное меню"><a href="#archive">Архив</a><a href="#about">О проекте</a><a href="#sources">Источники</a><a href="#contribute">Предложить материал</a></nav>
+ </div>
+</header>
+<section class="hero">
+ <div class="wrap">
+  <div class="eyebrow">Истории людей · документы · свидетельства</div>
+  <h1>Сохраняем память.<br>Проверяем историю.</h1>
+  <p>Историко-документальный архив материалов о людях и событиях, связанных со специальной военной операцией. Каждая опубликованная запись должна иметь проверяемое основание и указание источника.</p>
+  <div class="searchbox" role="search">
+   <div class="searchrow">
+    <input id="q" type="search" placeholder="Поиск по имени или названию материала" aria-label="Поисковый запрос">
+    <select id="status" aria-label="Статус"><option value="">Все статусы</option><option>Погибший</option><option>Пропавший без вести</option><option>Пленный</option><option>Вернулся</option><option>Действующий участник</option><option>Статус не установлен</option></select>
+    <select id="region" aria-label="Регион"><option value="">Все регионы</option><option>Московская область</option><option>Оренбургская область</option><option>Омская область</option><option>Республика Башкортостан</option><option>Саратовская область</option></select>
+    <button id="searchBtn">Найти</button>
+   </div>
+  </div>
+ </div>
+</section>
+<main class="wrap">
+ <section id="archive">
+  <div class="section-head"><div><h2>Материалы архива</h2><p class="sub" id="count">38 биографических записей из региональных публикаций. Записи требуют дальнейшей сверки и дополнения.</p></div><button class="secondary" id="resetBtn">Сбросить поиск</button></div>
+  <div class="filters" aria-label="Быстрый фильтр">
+   <button class="chip active" data-filter="">Все материалы</button>
+   <button class="chip" data-filter="Биография">Биографии</button>
+   <button class="chip" data-filter="Документ">Документы</button>
+   <button class="chip" data-filter="Воспоминание">Воспоминания</button>
+   <button class="chip" data-filter="Мемориал">Мемориалы</button>
+  </div>
+  <div class="results" id="results" aria-live="polite"></div>
+ </section>
+ <div class="notice"><b>О правилах публикации.</b> В этой стартовой версии нет реальных персональных записей. Не отправляйте через публичные каналы паспортные данные, адреса, телефоны, сведения о текущем месте службы, маршрутах, подразделениях или другие чувствительные данные. Публикация материалов возможна только после проверки законности, согласий и безопасности.</div>
+ <div class="grid2">
+  <section class="panel" id="about"><h2>О проекте</h2><p>«Архив памяти» задуман как открытый историко-документальный ресурс. Его задача — бережно собирать, описывать и сохранять документальные свидетельства, биографии и воспоминания.</p><p>Сайт не является официальным государственным ресурсом и не связан с порталом «Память народа».</p></section>
+  <section class="panel" id="sources"><h2>Проверка источников</h2><ul><li>У каждой записи указывается происхождение сведений.</li><li>Отдельно отмечаются подтверждённые и неподтверждённые сведения.</li><li>Даты проверки и исправления фиксируются.</li><li>Материалы без достаточного основания не публикуются как факты.</li></ul></section>
+  <section class="panel" id="contribute"><h2>Предложить материал</h2><p>В будущей версии здесь появится защищённая форма передачи материалов редакции. Сейчас приём файлов и персональных данных не подключён.</p><p><b>Пожалуйста, не размещайте личные документы в комментариях или открытых облачных папках.</b></p></section>
+  <section class="panel"><h2>Для исследователей</h2><p>Для каждой записи планируется единая структура: описание, тип материала, дата и регион (если безопасно раскрывать), источник, уровень проверки, история изменений и ограничения доступа.</p></section>
+ </div>
+</main>
+<footer><div class="wrap footerrow"><div><b>АРХИВ ПАМЯТИ</b><p>Историко-документальный проект</p></div><div><p>Первая публичная версия · Каталог пока пуст</p><p>© Архив памяти · Сведения приведены по указанным источникам</p></div></div></footer>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="dialog"><button class="close" id="closeModal" aria-label="Закрыть">Закрыть</button><h2 id="modalTitle">Карточка материала</h2><p id="modalText"></p></div></div>
+<script>
+/* Публичный каталог намеренно пуст: реальные сведения добавляются только после проверки.
+   Не помещайте сюда закрытые, чувствительные или опасные персональные данные. */
+const records = [
+  {
+    "title": "Евгений Александрович Журавлёв",
+    "type": "Биография",
+    "region": "Московская область",
+    "summary": "08.01.1982–14.07.2024. Биографическая публикация администрации городского округа Красногорск сообщает о присвоении звания Героя Российской Федерации.",
+    "source": "Администрация городского округа Красногорск",
+    "url": "https://krasnogorsk-adm.ru/ist/nashi-geroi/zhuravlev-evgeniy-alexandrovich.html"
+  },
+  {
+    "title": "Михаил Анатольевич Михайлов",
+    "type": "Биография",
+    "region": "Оренбургская область",
+    "summary": "Биография опубликована выставочным комплексом «Салют, Победа!»; источник сообщает о присвоении звания Героя Российской Федерации указом от 27 декабря 2024 года.",
+    "source": "Выставочный комплекс «Салют, Победа!»",
+    "url": "https://pobeda-orenburg.ru/people/67"
+  },
+  {
+    "title": "Антон Васильевич Струев",
+    "type": "Биография",
+    "region": "Оренбургская область",
+    "summary": "Биография опубликована выставочным комплексом «Салют, Победа!»; источник сообщает о присвоении звания Героя Российской Федерации указом от 31 декабря 2024 года.",
+    "source": "Выставочный комплекс «Салют, Победа!»",
+    "url": "https://pobeda-orenburg.ru/people/72"
+  },
+  {
+    "title": "Андраник Саргисович Гаспарян",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; год рождения 1983. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Евгений Петрович Груздев",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; 1993–2023. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Николай Иванович Данильченко",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; 1999–2022. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Вячеслав Александрович Кабицкий",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; год рождения 1987. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Сергей Сергеевич Мельников",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; 1982–2023. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Борис Владимирович Михеев",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; 1985–2022. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Андрей Игоревич Михеев",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; 1993–2024. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Ильяс Адильханович Мухамедеев",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; год рождения 1989. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Жумагельды Аитмухамедович Нурахметов",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; год рождения 1995. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Артём Александрович Пономаренко",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; 1993–2023. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Михаил Андреевич Торгашев",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; 1984–2024. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Антон Вячеславович Уляшев",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; 1992–2023. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Роман Евгеньевич Шалаев",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; 1992–2023. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Иван Александрович Шиц",
+    "type": "Биография",
+    "region": "Омская область",
+    "summary": "Герой Российской Федерации; год рождения 1981. Включён в биобиблиографический справочник «СВОи герои» Омских муниципальных библиотек.",
+    "source": "Омские муниципальные библиотеки",
+    "url": "https://ip.libomsk.ru/svoi"
+  },
+  {
+    "title": "Дмитрий Николаевич Авдонин",
+    "type": "Биография",
+    "region": "Республика Башкортостан",
+    "summary": "Музей истории города Уфы публикует отдельную биографическую страницу в разделе Героев Российской Федерации — участников СВО.",
+    "source": "Музей истории города Уфы",
+    "url": "https://museum-ufa.ru/avdonin-dmitrij-nikolaevich/"
+  },
+  {
+    "title": "Владислав Алексеевич Бочаров",
+    "type": "Биография",
+    "region": "Республика Башкортостан",
+    "summary": "Музей истории города Уфы публикует отдельную биографическую страницу в разделе Героев Российской Федерации — участников СВО.",
+    "source": "Музей истории города Уфы",
+    "url": "https://museum-ufa.ru/bocharov-vladislav-alekseevich/"
+  },
+  {
+    "title": "Руслан Вильевич Гарифуллин",
+    "type": "Биография",
+    "region": "Республика Башкортостан",
+    "summary": "Указан в разделе Музея истории города Уфы «Герои Российской Федерации — участники специальной военной операции».",
+    "source": "Музей истории города Уфы",
+    "url": "https://museum-ufa.ru/category/heroes/geroi-rossijskoj-federaczii-uchastniki-speczialnoj-voennoj-operaczii/"
+  },
+  {
+    "title": "Никита Александрович Петров",
+    "type": "Биография",
+    "region": "Республика Башкортостан",
+    "summary": "Указан в разделе Музея истории города Уфы «Герои Российской Федерации — участники специальной военной операции».",
+    "source": "Музей истории города Уфы",
+    "url": "https://museum-ufa.ru/category/heroes/geroi-rossijskoj-federaczii-uchastniki-speczialnoj-voennoj-operaczii/"
+  },
+  {
+    "title": "Станислав Владимирович Большаков",
+    "type": "Биография",
+    "region": "Республика Башкортостан",
+    "summary": "Указан в разделе Музея истории города Уфы «Герои Российской Федерации — участники специальной военной операции».",
+    "source": "Музей истории города Уфы",
+    "url": "https://museum-ufa.ru/category/heroes/geroi-rossijskoj-federaczii-uchastniki-speczialnoj-voennoj-operaczii/"
+  },
+  {
+    "title": "Денис Юрьевич Чернавин",
+    "type": "Биография",
+    "region": "Республика Башкортостан",
+    "summary": "Указан в разделе Музея истории города Уфы «Герои Российской Федерации — участники специальной военной операции».",
+    "source": "Музей истории города Уфы",
+    "url": "https://museum-ufa.ru/category/heroes/geroi-rossijskoj-federaczii-uchastniki-speczialnoj-voennoj-operaczii/"
+  },
+  {
+    "title": "Игорь Леонидович Насибуллин",
+    "type": "Биография",
+    "region": "Республика Башкортостан",
+    "summary": "Указан в разделе Музея истории города Уфы «Герои Российской Федерации — участники специальной военной операции».",
+    "source": "Музей истории города Уфы",
+    "url": "https://museum-ufa.ru/category/heroes/geroi-rossijskoj-federaczii-uchastniki-speczialnoj-voennoj-operaczii/"
+  },
+  {
+    "title": "Андрей Павлович Мигунов",
+    "type": "Биография",
+    "region": "Республика Башкортостан",
+    "summary": "Указан в разделе Музея истории города Уфы «Герои Российской Федерации — участники специальной военной операции».",
+    "source": "Музей истории города Уфы",
+    "url": "https://museum-ufa.ru/category/heroes/geroi-rossijskoj-federaczii-uchastniki-speczialnoj-voennoj-operaczii/"
+  },
+  {
+    "title": "Тамерлан Айсарович Ильгамов",
+    "type": "Биография",
+    "region": "Республика Башкортостан",
+    "summary": "Указан в разделе Музея истории города Уфы «Герои Российской Федерации — участники специальной военной операции».",
+    "source": "Музей истории города Уфы",
+    "url": "https://museum-ufa.ru/category/heroes/geroi-rossijskoj-federaczii-uchastniki-speczialnoj-voennoj-operaczii/"
+  },
+  {
+    "title": "Борис Александрович Дудко",
+    "type": "Биография",
+    "region": "Республика Башкортостан",
+    "summary": "Указан в разделе Музея истории города Уфы «Герои Российской Федерации — участники специальной военной операции».",
+    "source": "Музей истории города Уфы",
+    "url": "https://museum-ufa.ru/category/heroes/geroi-rossijskoj-federaczii-uchastniki-speczialnoj-voennoj-operaczii/"
+  },
+  {
+    "title": "Александр Александрович Аксёнов",
+    "type": "Биография",
+    "region": "Саратовская область",
+    "summary": "СГУ включает его в выставку биографий Героев Российской Федерации, связанных с Саратовским краем.",
+    "source": "Саратовский государственный университет",
+    "url": "https://www.sgu.ru/news/2025/prodolzhaet-rabotu-vystavka-nashi-zemlyaki-geroi-rossii-uchastniki-svo-posvyaschyonnaya"
+  },
+  {
+    "title": "Александр Михайлович Белоглазов",
+    "type": "Биография",
+    "region": "Саратовская область",
+    "summary": "СГУ включает его в выставку биографий Героев Российской Федерации, связанных с Саратовским краем.",
+    "source": "Саратовский государственный университет",
+    "url": "https://www.sgu.ru/news/2025/prodolzhaet-rabotu-vystavka-nashi-zemlyaki-geroi-rossii-uchastniki-svo-posvyaschyonnaya"
+  },
+  {
+    "title": "Сергей Иванович Демьяненко",
+    "type": "Биография",
+    "region": "Саратовская область",
+    "summary": "СГУ включает его в выставку биографий Героев Российской Федерации, связанных с Саратовским краем.",
+    "source": "Саратовский государственный университет",
+    "url": "https://www.sgu.ru/news/2025/prodolzhaet-rabotu-vystavka-nashi-zemlyaki-geroi-rossii-uchastniki-svo-posvyaschyonnaya"
+  },
+  {
+    "title": "Мирлан Андреевич Джумагалиев",
+    "type": "Биография",
+    "region": "Саратовская область",
+    "summary": "СГУ включает его в выставку биографий Героев Российской Федерации, связанных с Саратовским краем.",
+    "source": "Саратовский государственный университет",
+    "url": "https://www.sgu.ru/news/2025/prodolzhaet-rabotu-vystavka-nashi-zemlyaki-geroi-rossii-uchastniki-svo-posvyaschyonnaya"
+  },
+  {
+    "title": "Тимур Юрьевич Дудкин",
+    "type": "Биография",
+    "region": "Саратовская область",
+    "summary": "СГУ включает его в выставку биографий Героев Российской Федерации, связанных с Саратовским краем.",
+    "source": "Саратовский государственный университет",
+    "url": "https://www.sgu.ru/news/2025/prodolzhaet-rabotu-vystavka-nashi-zemlyaki-geroi-rossii-uchastniki-svo-posvyaschyonnaya"
+  },
+  {
+    "title": "Сергей Сергеевич Назаров",
+    "type": "Биография",
+    "region": "Саратовская область",
+    "summary": "СГУ включает его в выставку биографий Героев Российской Федерации, связанных с Саратовским краем.",
+    "source": "Саратовский государственный университет",
+    "url": "https://www.sgu.ru/news/2025/prodolzhaet-rabotu-vystavka-nashi-zemlyaki-geroi-rossii-uchastniki-svo-posvyaschyonnaya"
+  },
+  {
+    "title": "Никита Андреевич Палазник",
+    "type": "Биография",
+    "region": "Саратовская область",
+    "summary": "СГУ включает его в выставку биографий Героев Российской Федерации, связанных с Саратовским краем.",
+    "source": "Саратовский государственный университет",
+    "url": "https://www.sgu.ru/news/2025/prodolzhaet-rabotu-vystavka-nashi-zemlyaki-geroi-rossii-uchastniki-svo-posvyaschyonnaya"
+  },
+  {
+    "title": "Александр Игоревич Потапов",
+    "type": "Биография",
+    "region": "Саратовская область",
+    "summary": "СГУ включает его в выставку биографий Героев Российской Федерации, связанных с Саратовским краем.",
+    "source": "Саратовский государственный университет",
+    "url": "https://www.sgu.ru/news/2025/prodolzhaet-rabotu-vystavka-nashi-zemlyaki-geroi-rossii-uchastniki-svo-posvyaschyonnaya"
+  },
+  {
+    "title": "Арслан Булатович Султанов",
+    "type": "Биография",
+    "region": "Саратовская область",
+    "summary": "СГУ включает его в выставку биографий Героев Российской Федерации, связанных с Саратовским краем.",
+    "source": "Саратовский государственный университет",
+    "url": "https://www.sgu.ru/news/2025/prodolzhaet-rabotu-vystavka-nashi-zemlyaki-geroi-rossii-uchastniki-svo-posvyaschyonnaya"
+  },
+  {
+    "title": "Андрей Филоненко",
+    "type": "Биография",
+    "region": "Саратовская область",
+    "summary": "СГУ включает его в выставку биографий Героев Российской Федерации, связанных с Саратовским краем.",
+    "source": "Саратовский государственный университет",
+    "url": "https://www.sgu.ru/news/2025/prodolzhaet-rabotu-vystavka-nashi-zemlyaki-geroi-rossii-uchastniki-svo-posvyaschyonnaya"
+  },
+  {
+    "title": "Людмила Вячеславовна Болилая",
+    "type": "Биография",
+    "region": "Саратовская область",
+    "summary": "СГУ включает её в выставку биографий Героев Российской Федерации, связанных с Саратовским краем.",
+    "source": "Саратовский государственный университет",
+    "url": "https://www.sgu.ru/news/2025/prodolzhaet-rabotu-vystavka-nashi-zemlyaki-geroi-rossii-uchastniki-svo-posvyaschyonnaya"
+  }
+];
+let activeType = "";
+const q = document.getElementById("q"), status = document.getElementById("status"), region = document.getElementById("region");
+const results = document.getElementById("results"), count = document.getElementById("count");
+function render(){
+ const term=q.value.trim().toLocaleLowerCase("ru");
+ const found=records.filter(r=>(!term || (r.title+" "+r.summary+" "+(r.region||"")).toLocaleLowerCase("ru").includes(term)) &&
+ (!status.value || r.status===status.value) && (!region.value || r.region===region.value) && (!activeType || r.type===activeType));
+ count.textContent=`Найдено материалов: ${found.length}`;
+ results.innerHTML="";
+ if(!found.length){
+  const empty=document.createElement("div");empty.className="empty";
+  empty.innerHTML='<div class="symbol" aria-hidden="true">⌕</div><h3>Пока нет опубликованных материалов</h3><p>Каталог подготовлен для наполнения. Записи появятся после проверки сведений, источников, прав на материалы и вопросов безопасности.</p>';
+  results.appendChild(empty);return;
+ }
+ found.forEach(r=>{
+  const card=document.createElement("article");card.className="record";
+  const tag=document.createElement("div");tag.className="tag";tag.textContent=r.type;
+  const h=document.createElement("h3");h.textContent=r.title;
+  const p=document.createElement("p");p.textContent=r.summary;
+  const a=document.createElement("a");a.href=r.url;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Открыть источник →";
+  const meta=document.createElement("small");meta.style.cssText="display:block;color:#748093;font-size:12px;margin-top:8px";meta.textContent="Источник: "+r.source;
+  card.append(tag,h,p,meta,a);results.appendChild(card);
+ });
+}
+document.getElementById("searchBtn").addEventListener("click",render);
+q.addEventListener("keydown",e=>{if(e.key==="Enter")render()});
+status.addEventListener("change",render);region.addEventListener("change",render);
+document.getElementById("resetBtn").addEventListener("click",()=>{q.value="";status.value="";region.value="";activeType="";document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active",c.dataset.filter===""));render()});
+document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{activeType=c.dataset.filter;document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x===c));render()}));
+document.getElementById("closeModal").addEventListener("click",()=>document.getElementById("modal").classList.remove("open"));
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")e.currentTarget.classList.remove("open")});
+render();
+</script>
+</body>
+</html>
